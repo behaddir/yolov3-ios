@@ -59,3 +59,26 @@ For yolo model with darknet or densenet
 
 For tiny model
 * just change the labels and run the project
+
+convert.py içindeki 
+ input_layer = Input(shape=(None, None, 3))
+ input_layer = Input(shape=(416,416,3)) ile değiştiriyoruz. 
+ 
+ Daha sonra 
+ python convert.py Yeni_model.cfg Yeni_modelin_agirlik_dosyasi.weights model_data/output_dosya_ismi.h5
+ komutunu bulunduğu klasörden çağırıyoruz. Bu weights dosyasını keras dosyasına çeviriyor. Dikkat!!! Bu komut yukarıdakinden farklı!!!!
+ 
+ Çıkan output dosyasini coreml.py'ın bulunduğu klasöre götürerek
+ coreml.py dosyasını elimizdeki dosyaya göre editliyoruz. 
+ Bu keras dosyasını coreml dosyasına çeviriyor.
+ 
+ Sonrasında
+ 32 bit modeli 16bit'e çevirmek için aşağıdaki kodları çalıştırıyoruz.
+ 
+ import coremltools
+ model_spec = coremltools.utils.load_spec('yukarıdaki işlemden çıkan *.mlmodel uzantılı dosyanın path'i')
+ model = coremltools.models.MLModel('yukarıdaki işlemden çıkan *.mlmodel uzantılı dosyanın path'i')
+ coremltools.utils.convet_neural_network_to_fp16(model).save('16bit çıkacak olan *.mlmodel dosyasına isim veriyoruz')
+ 
+ Bu dosyayı bu projenin içindeki xcode projesine ekleyerek. YOLO.swift içinden erişimini sağlıyoruz. tiny.mlmodel yazan kodu bir yukarda hangi ismi verdiysek onunla değiştiriyoruz. Helpers.swift içinden anchor ve label değişimlerini yapabiliriz. 
+ 
