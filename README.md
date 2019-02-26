@@ -76,9 +76,10 @@ convert.py içindeki
  32 bit modeli 16bit'e çevirmek için aşağıdaki kodları çalıştırıyoruz.
  
  import coremltools
+ 
  model_spec = coremltools.utils.load_spec('yukarıdaki işlemden çıkan *.mlmodel uzantılı dosyanın path'i')
  model = coremltools.models.MLModel('yukarıdaki işlemden çıkan *.mlmodel uzantılı dosyanın path'i')
- coremltools.utils.convet_neural_network_to_fp16(model).save('16bit çıkacak olan *.mlmodel dosyasına isim veriyoruz')
+ coremltools.utils.convert_neural_network_weights_to_fp16(model).save('16bit çıkacak olan *.mlmodel dosyasına isim veriyoruz')
  
  Bu dosyayı bu projenin içindeki xcode projesine ekleyerek. YOLO.swift içinden erişimini sağlıyoruz. tiny.mlmodel yazan kodu bir yukarda hangi ismi verdiysek onunla değiştiriyoruz. Helpers.swift içinden anchor ve label değişimlerini yapabiliriz. 
  
